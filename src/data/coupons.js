@@ -6,7 +6,7 @@ import bundledCouponDB from './coupon-db.json'
 
 // ─── Remote Data Config ───────────────────────────────────────────────────────
 
-const REMOTE_COUPON_DB_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/couponsnap/main/src/data/coupon-db.json'
+const REMOTE_COUPON_DB_URL = 'https://raw.githubusercontent.com/kennethlaw325/couponsnap/main/src/data/coupon-db.json'
 
 const CACHE_KEY = 'coupon_db_cache'
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000  // 24 hours
