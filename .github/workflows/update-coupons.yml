@@ -1,0 +1,59 @@
+name: Update Coupon Database
+
+on:
+  schedule:
+    # Run daily at 2:00 AM UTC (uses ~2 min of Actions minutes)
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    # Allow manual trigger from GitHub Actions UI
+
+jobs:
+  update-coupons:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          playwright install chromium --with-deps
+
+      - name: Run coupon scraper
+        run: |
+          cd scraper
+          # Use --seed-only for reliable CI runs (live scraping sites use anti-bot protection)
+          # Remove --seed-only when a verified scrapable source is integrated
+          python scraper.py --quiet --seed-only
+        env:
+          PYTHONUNBUFFERED: '1'
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --quiet src/data/coupon-db.json || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/coupon-db.json
+          git commit -m "chore: update coupon database $(date -u '+%Y-%m-%d')"
+          git push
+
+      - name: Report results
+        run: |
+          DOMAINS=$(python3 -c "import json; db=json.load(open('src/data/coupon-db.json')); print(len(db))")
+          CODES=$(python3 -c "import json; db=json.load(open('src/data/coupon-db.json')); print(sum(len(e['codes']) for e in db))")
+          echo "✅ Coupon DB: $DOMAINS domains, $CODES codes"
