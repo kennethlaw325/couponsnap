@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CouponSnap - Auto Coupon Finder",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Find deals, apply coupon codes, and save money automatically while you shop. Community-powered savings!",
   "permissions": [
     "activeTab",

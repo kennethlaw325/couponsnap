@@ -2,6 +2,7 @@
 import { getCouponsForDomain, getAllCodesForDomain, submitUserCode, injectAffiliateTag } from '../data/coupons.js'
 
 const GITHUB_RELEASE_URL = 'https://github.com/kennethlaw325/couponsnap/releases/latest'
+const FEEDBACK_FORM_URL = 'https://forms.gle/REPLACE_WITH_REAL_FORM_URL'
 
 const content = document.getElementById('content')
 const tabsEl = document.getElementById('tabs')
@@ -453,6 +454,13 @@ async function init() {
     renderIdle()
   }
 }
+
+// ─── Feedback Link ────────────────────────────────────────────────────────────
+
+document.getElementById('link-feedback')?.addEventListener('click', (e) => {
+  e.preventDefault()
+  chrome.tabs.create({ url: FEEDBACK_FORM_URL })
+})
 
 initTabs()
 maybeShowOnboarding()
