@@ -7,13 +7,16 @@ import { getCouponsForDomain, injectAffiliateTag } from '../data/coupons.js'
 // ─── Checkout Detection ───────────────────────────────────────────────────────
 
 const CHECKOUT_URL_PATTERNS = [
-  /\/checkout/i, /\/cart/i, /\/payment/i, /\/order/i,
-  /\/basket/i, /\/purchase/i, /\/buy\//i, /\/secure/i
+  /\/checkout/i, /\/checkouts\//i, /\/cart/i, /\/payment/i, /\/order/i,
+  /\/basket/i, /\/purchase/i, /\/buy\//i, /\/secure/i,
+  /\/wc-api\/wc_gateway/i,        // WooCommerce payment gateway
+  /\/finalize/i,                  // BigCommerce finalize
 ]
 
 const CHECKOUT_DOM_SIGNALS = [
   '[data-step="contact_information"]',  // Shopify
   '[data-step="payment_method"]',       // Shopify
+  '[data-step="shipping_method"]',      // Shopify
   '.order-summary',                     // Shopify
   '#checkout',                          // Generic
   '.checkout-form',
@@ -21,7 +24,15 @@ const CHECKOUT_DOM_SIGNALS = [
   '[data-testid="checkout"]',
   '.cart-checkout',
   'form[action*="checkout"]',
-  'form[action*="payment"]'
+  'form[action*="payment"]',
+  // WooCommerce
+  '.woocommerce-checkout',
+  '#order_review',
+  'form.woocommerce-checkout',
+  // BigCommerce
+  '[data-cart-status]',
+  '.optimizedCheckout-form',
+  '#checkoutApp',
 ]
 
 function isCheckoutPage() {

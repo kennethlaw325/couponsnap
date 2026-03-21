@@ -1,12 +1,19 @@
 # CouponSnap — Chrome Web Store Submission Checklist
 
+**版本：v0.2.0** | 最後更新：2026-03-21
+
 ## ✅ Forge 已完成 (Code-level)
 
-- [x] Extension build (`dist/` folder ready)
+- [x] Extension v0.2.0 build (`dist/` folder ready)
 - [x] manifest.json (MV3, correct permissions)
 - [x] Icons: 16x16, 48x48, 128x128 (orange, in `dist/icons/`)
 - [x] Privacy policy HTML (`store-assets/privacy-policy.html`)
 - [x] Store listing copy (`store-assets/store-listing.md`)
+- [x] `REMOTE_COUPON_DB_URL` 已設為 `kennethlaw325/couponsnap` (remote fetch 正常)
+- [x] Deal Finder + Crowdsource 功能 (ZER-41)
+- [x] Firefox Add-on build `couponsnap-firefox-v0.2.0.zip` (ZER-44)
+- [x] GitHub Releases sideload beta (ZER-45)
+- [x] Submission zip: `couponsnap-v0.2.0.zip` (14.99 KB)
 
 ---
 
@@ -54,7 +61,7 @@ Update `store-listing.md` privacy policy URL with the actual GitHub Pages URL.
 
 1. Go to https://chrome.google.com/webstore/devconsole
 2. Click "+ New Item"
-3. Upload `couponsnap-v0.1.0.zip` (see below)
+3. Upload `couponsnap-v0.2.0.zip` (see below)
 4. Fill in store listing from `store-assets/store-listing.md`
 5. Upload screenshots and promotional tile
 6. Set Privacy Policy URL (from GitHub Pages)
@@ -69,7 +76,7 @@ Run this in the project directory:
 cd couponsnap
 npm run build
 cd dist
-zip -r ../couponsnap-v0.1.0.zip .
+zip -r ../couponsnap-v0.2.0.zip .
 ```
 
 The zip should contain `manifest.json` at the root level.

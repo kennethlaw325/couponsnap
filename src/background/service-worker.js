@@ -1,6 +1,44 @@
-// CouponSnap Background Service Worker v2
+// CouponSnap Background Service Worker v3
 
 const tabStates = new Map()
+
+// ─── Analytics (GA4 Measurement Protocol) ────────────────────────────────────
+// Privacy-safe: no PII, aggregate counts only, no cross-site tracking
+
+const GA_ENDPOINT = 'https://www.google-analytics.com/mp/collect'
+const GA_MEASUREMENT_ID = 'G-COUPONSNAP01'  // Replace with real GA4 ID
+const GA_API_SECRET = 'REPLACE_WITH_SECRET' // Replace with GA4 API secret
+
+async function getClientId() {
+  try {
+    const result = await chrome.storage.local.get('ga_client_id')
+    if (result.ga_client_id) return result.ga_client_id
+    // Generate a random client ID (not linked to any user identity)
+    const id = crypto.randomUUID()
+    await chrome.storage.local.set({ ga_client_id: id })
+    return id
+  } catch {
+    return 'unknown-' + Math.random().toString(36).slice(2)
+  }
+}
+
+async function sendAnalyticsEvent(eventName, params = {}) {
+  // Skip if placeholder keys not replaced yet
+  if (GA_API_SECRET === 'REPLACE_WITH_SECRET') return
+  try {
+    const clientId = await getClientId()
+    await fetch(`${GA_ENDPOINT}?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        client_id: clientId,
+        non_personalized_ads: true,
+        events: [{ name: eventName, params }]
+      })
+    })
+  } catch {
+    // Fail silently — analytics is non-critical
+  }
+}
 
 // ─── Badge Helpers ────────────────────────────────────────────────────────────
 
@@ -55,6 +93,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       state.description = msg.description
       tabStates.set(tabId, state)
       setBadge(tabId, '✓', '#22c55e')
+      sendAnalyticsEvent('coupon_applied', {
+        hostname: state.hostname || 'unknown',
+        has_discount: !!msg.discount
+      })
       break
     }
 
@@ -63,6 +105,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       state.status = 'no_field'
       tabStates.set(tabId, state)
       setBadge(tabId, '?', '#64748b')
+      sendAnalyticsEvent('no_coupon_field', { hostname: state.hostname || 'unknown' })
       break
     }
 
@@ -71,6 +114,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       state.status = 'failed'
       tabStates.set(tabId, state)
       setBadge(tabId, '✗', '#ef4444')
+      sendAnalyticsEvent('coupon_failed', { hostname: state.hostname || 'unknown' })
       break
     }
 
@@ -97,12 +141,15 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 
 // ─── Context Menu (right-click to force try) ──────────────────────────────────
 
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener((details) => {
   chrome.contextMenus.create({
     id: 'couponsnap-try',
     title: 'CouponSnap: Try Coupon Codes',
     contexts: ['page']
   })
+  if (details.reason === 'install') {
+    sendAnalyticsEvent('extension_installed', { version: chrome.runtime.getManifest().version })
+  }
 })
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
