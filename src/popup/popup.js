@@ -102,6 +102,7 @@ async function renderSiteFound(hostname, checkoutState, tabId) {
 
   bindDealsButtons(hostname, entry)
   bindCodesApplyButton(tabId, checkoutState)
+  bindCopyButtons()
   bindSubmitCode(hostname)
 }
 
@@ -194,14 +195,51 @@ async function buildCodesPanel(allCodes, checkoutState, tabId, hostname) {
         <div class="code-desc">${c.desc}</div>
         ${c.userSubmitted ? '<div class="user-badge">👤 Community</div>' : ''}
       </div>
-      <span class="code-discount">${c.discount}</span>
+      <div class="code-actions">
+        <span class="code-discount">${c.discount}</span>
+        <button class="btn-copy" data-code="${c.code}" title="Copy code">📋</button>
+      </div>
     </div>
   `).join('')
 
+  // Show copy-fallback hint when auto-apply unavailable
+  const copyHint = (checkoutState?.status === 'no_field')
+    ? `<div class="copy-hint">⚠️ Auto-apply not available here — copy a code and paste it at checkout</div>`
+    : ''
+
   return `
     ${ctaHtml}
-    <div class="code-list" style="margin-top:${ctaHtml ? '10px' : '0'}">${items}</div>
+    ${copyHint}
+    <div class="code-list" style="margin-top:${ctaHtml || copyHint ? '10px' : '0'}">${items}</div>
   `
+}
+
+function bindCopyButtons() {
+  document.querySelectorAll('.btn-copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = btn.dataset.code
+      try {
+        await navigator.clipboard.writeText(code)
+        const orig = btn.textContent
+        btn.textContent = '✓'
+        btn.style.color = '#22c55e'
+        setTimeout(() => {
+          btn.textContent = orig
+          btn.style.color = ''
+        }, 1500)
+      } catch {
+        // Fallback: select text via temp input
+        const tmp = document.createElement('input')
+        tmp.value = code
+        document.body.appendChild(tmp)
+        tmp.select()
+        document.execCommand('copy')
+        document.body.removeChild(tmp)
+        btn.textContent = '✓'
+        setTimeout(() => { btn.textContent = '📋' }, 1500)
+      }
+    })
+  })
 }
 
 function bindCodesApplyButton(tabId, checkoutState) {

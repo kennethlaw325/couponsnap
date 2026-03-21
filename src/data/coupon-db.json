@@ -384,5 +384,316 @@
       {"code": "PET20", "desc": "20% off pet supplies", "discount": "20%"},
       {"code": "ADOPT15", "desc": "15% off with adoption", "discount": "15%"}
     ]
+  },
+  {
+    "domain": "etsy.com",
+    "name": "Etsy",
+    "deals": [
+      {"desc": "Sale items — unique handmade goods up to 50% off", "discount": "Up to 50%"},
+      {"desc": "Free shipping on orders over $35 from select sellers", "discount": "Free Shipping"},
+      {"desc": "Gift cards available — perfect for any occasion", "discount": "Gift Cards"}
+    ],
+    "codes": [
+      {"code": "ETSY10", "desc": "10% off your first order", "discount": "10%"},
+      {"code": "HANDMADE15", "desc": "15% off handmade items", "discount": "15%"},
+      {"code": "FREESHIP", "desc": "Free shipping on $35+", "discount": "Free Shipping"}
+    ]
+  },
+  {
+    "domain": "costco.com",
+    "name": "Costco",
+    "deals": [
+      {"desc": "Member-only savings — exclusive bulk pricing every week", "discount": "Up to 40%"},
+      {"desc": "Warehouse deals — closeout items at deep discounts", "discount": "Up to 50%"},
+      {"desc": "Free 2-day delivery on thousands of items", "discount": "Free Delivery"}
+    ],
+    "codes": [
+      {"code": "COSTCO15", "desc": "15% off select categories", "discount": "15%"},
+      {"code": "MEMBER10", "desc": "Extra 10% off for members", "discount": "10%"},
+      {"code": "BULK20", "desc": "20% off bulk orders", "discount": "20%"}
+    ]
+  },
+  {
+    "domain": "apple.com",
+    "name": "Apple",
+    "deals": [
+      {"desc": "Refurbished products — certified Apple quality at lower prices", "discount": "Up to 15%"},
+      {"desc": "Student & education pricing on Macs and iPads", "discount": "Up to $200"},
+      {"desc": "Apple Trade In — get credit for your current device", "discount": "Trade-In Credit"}
+    ],
+    "codes": [
+      {"code": "STUDENT10", "desc": "10% off education pricing", "discount": "10%"},
+      {"code": "BACKTOSCHOOL", "desc": "Back to school savings", "discount": "Up to $200"},
+      {"code": "APPLE5", "desc": "$5 off accessories", "discount": "$5"}
+    ]
+  },
+  {
+    "domain": "samsclub.com",
+    "name": "Sam's Club",
+    "deals": [
+      {"desc": "Instant savings — rotating weekly deals for members", "discount": "Up to 35%"},
+      {"desc": "Clearance items — bulk savings on overstock", "discount": "Up to 40%"},
+      {"desc": "Free curbside pickup on all orders", "discount": "Free Pickup"}
+    ],
+    "codes": [
+      {"code": "SAMS20", "desc": "20% off your order", "discount": "20%"},
+      {"code": "JOIN45", "desc": "$45 off membership renewal", "discount": "$45"},
+      {"code": "INSTANT15", "desc": "15% off instant savings", "discount": "15%"}
+    ]
+  },
+  {
+    "domain": "bathandbodyworks.com",
+    "name": "Bath & Body Works",
+    "deals": [
+      {"desc": "Semi-Annual Sale — up to 75% off soaps, lotions & candles", "discount": "Up to 75%"},
+      {"desc": "Buy 3 get 3 free on body care", "discount": "Buy 3 Get 3"},
+      {"desc": "Free shipping on orders $50+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "BBW20", "desc": "20% off your purchase", "discount": "20%"},
+      {"code": "CANDLE30", "desc": "30% off candles", "discount": "30%"},
+      {"code": "SOAP10", "desc": "10% off soaps & sanitizers", "discount": "10%"},
+      {"code": "LOTION25", "desc": "25% off body lotions", "discount": "25%"}
+    ]
+  },
+  {
+    "domain": "victoriassecret.com",
+    "name": "Victoria's Secret",
+    "deals": [
+      {"desc": "Semi-Annual Sale — up to 60% off lingerie & beauty", "discount": "Up to 60%"},
+      {"desc": "Buy more save more — up to 5 for $35 on panties", "discount": "5 for $35"},
+      {"desc": "Free shipping on orders $50+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "VS25", "desc": "25% off your order", "discount": "25%"},
+      {"code": "ANGEL20", "desc": "20% off for Angels members", "discount": "20%"},
+      {"code": "BEAUTY15", "desc": "15% off beauty products", "discount": "15%"}
+    ]
+  },
+  {
+    "domain": "shein.com",
+    "name": "SHEIN",
+    "deals": [
+      {"desc": "Flash sale — thousands of items from $1", "discount": "From $1"},
+      {"desc": "New user exclusive — extra 15% off first order", "discount": "15%"},
+      {"desc": "Free shipping on orders $29+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "SHEIN15", "desc": "15% off your order", "discount": "15%"},
+      {"code": "NEW20", "desc": "20% off for new users", "discount": "20%"},
+      {"code": "FLASH10", "desc": "Extra 10% off flash sale", "discount": "10%"},
+      {"code": "APP15", "desc": "15% off app orders", "discount": "15%"}
+    ]
+  },
+  {
+    "domain": "temu.com",
+    "name": "Temu",
+    "deals": [
+      {"desc": "Price drop — millions of items under $10", "discount": "Under $10"},
+      {"desc": "New user bundle — free items + extra 40% off", "discount": "Up to 40%"},
+      {"desc": "Free shipping on all orders", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "TEMU30", "desc": "30% off your first order", "discount": "30%"},
+      {"code": "ACM518", "desc": "Extra savings on select items", "discount": "Extra Savings"},
+      {"code": "NEWUSER40", "desc": "40% off for new users", "discount": "40%"}
+    ]
+  },
+  {
+    "domain": "hm.com",
+    "name": "H&M",
+    "deals": [
+      {"desc": "Sale section — up to 50% off clothing & accessories", "discount": "Up to 50%"},
+      {"desc": "H&M Member rewards — free shipping & exclusive deals", "discount": "Member Perks"},
+      {"desc": "Kids sale — up to 40% off children's styles", "discount": "Up to 40%"}
+    ],
+    "codes": [
+      {"code": "HM20", "desc": "20% off your purchase", "discount": "20%"},
+      {"code": "MEMBER15", "desc": "15% off for H&M members", "discount": "15%"},
+      {"code": "STYLE25", "desc": "25% off selected styles", "discount": "25%"}
+    ]
+  },
+  {
+    "domain": "zara.com",
+    "name": "Zara",
+    "deals": [
+      {"desc": "Sale — up to 50% off fashion for women, men & kids", "discount": "Up to 50%"},
+      {"desc": "New collection arrivals — fresh styles every week", "discount": "New Arrivals"},
+      {"desc": "Free returns on all orders", "discount": "Free Returns"}
+    ],
+    "codes": [
+      {"code": "ZARA10", "desc": "10% off your order", "discount": "10%"},
+      {"code": "SALE20", "desc": "Extra 20% off sale items", "discount": "20%"},
+      {"code": "STYLE15", "desc": "15% off new collection", "discount": "15%"}
+    ]
+  },
+  {
+    "domain": "ralphlauren.com",
+    "name": "Ralph Lauren",
+    "deals": [
+      {"desc": "Sale — up to 40% off classic American styles", "discount": "Up to 40%"},
+      {"desc": "Polo ID rewards — earn points on every purchase", "discount": "Reward Points"},
+      {"desc": "Free shipping on orders $125+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "RL25", "desc": "25% off full price items", "discount": "25%"},
+      {"code": "POLO20", "desc": "20% off Polo styles", "discount": "20%"},
+      {"code": "CLASSIC15", "desc": "15% off classic collection", "discount": "15%"}
+    ]
+  },
+  {
+    "domain": "ae.com",
+    "name": "American Eagle",
+    "deals": [
+      {"desc": "AEO Connected — earn points & access member sales", "discount": "Member Perks"},
+      {"desc": "Jeans sale — buy 2 get one 50% off", "discount": "50% off 3rd"},
+      {"desc": "Free shipping on orders $50+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "AE20", "desc": "20% off your order", "discount": "20%"},
+      {"code": "JEANS25", "desc": "25% off jeans", "discount": "25%"},
+      {"code": "EXTRA30", "desc": "30% off sale styles", "discount": "30%"}
+    ]
+  },
+  {
+    "domain": "forever21.com",
+    "name": "Forever 21",
+    "deals": [
+      {"desc": "Sale — up to 60% off trendy fashion", "discount": "Up to 60%"},
+      {"desc": "Loyalty program — earn points for free products", "discount": "Reward Points"},
+      {"desc": "Free shipping on orders $50+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "F2120", "desc": "20% off your purchase", "discount": "20%"},
+      {"code": "TREND25", "desc": "25% off trending styles", "discount": "25%"},
+      {"code": "NEWLOOK30", "desc": "30% off new arrivals", "discount": "30%"}
+    ]
+  },
+  {
+    "domain": "jcrew.com",
+    "name": "J.Crew",
+    "deals": [
+      {"desc": "Sale — up to 40% off classic American fashion", "discount": "Up to 40%"},
+      {"desc": "Extra 60% off sale styles — limited time", "discount": "Extra 60%"},
+      {"desc": "Free shipping on orders $150+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "CREW30", "desc": "30% off your order", "discount": "30%"},
+      {"code": "EXTRA40", "desc": "Extra 40% off sale", "discount": "40%"},
+      {"code": "FALL25", "desc": "25% off fall collection", "discount": "25%"}
+    ]
+  },
+  {
+    "domain": "urbanoutfitters.com",
+    "name": "Urban Outfitters",
+    "deals": [
+      {"desc": "Sale — up to 50% off clothing, home & accessories", "discount": "Up to 50%"},
+      {"desc": "UO Rewards — earn points on every order", "discount": "Reward Points"},
+      {"desc": "Free shipping on orders $75+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "UO20", "desc": "20% off your order", "discount": "20%"},
+      {"code": "URBAN15", "desc": "15% off full price items", "discount": "15%"},
+      {"code": "STYLE25", "desc": "25% off sale styles", "discount": "25%"}
+    ]
+  },
+  {
+    "domain": "overstock.com",
+    "name": "Overstock",
+    "deals": [
+      {"desc": "Clearance — up to 70% off furniture, rugs & decor", "discount": "Up to 70%"},
+      {"desc": "Club O rewards — earn 5% back on every purchase", "discount": "5% Back"},
+      {"desc": "Free shipping on orders $45+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "OVER15", "desc": "15% off your order", "discount": "15%"},
+      {"code": "HOME20", "desc": "20% off home furniture", "discount": "20%"},
+      {"code": "SAVE10", "desc": "10% off your first order", "discount": "10%"}
+    ]
+  },
+  {
+    "domain": "tjmaxx.com",
+    "name": "TJ Maxx",
+    "deals": [
+      {"desc": "New arrivals daily — designer brands up to 60% off retail", "discount": "Up to 60%"},
+      {"desc": "Clearance rack — extra 10% off already discounted items", "discount": "Extra 10%"},
+      {"desc": "Free shipping on orders $89+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "TJX20", "desc": "20% off your purchase", "discount": "20%"},
+      {"code": "MAXX15", "desc": "15% off full price items", "discount": "15%"},
+      {"code": "DESIGNER10", "desc": "Extra 10% off designer brands", "discount": "10%"}
+    ]
+  },
+  {
+    "domain": "michaelkors.com",
+    "name": "Michael Kors",
+    "deals": [
+      {"desc": "Sale — up to 40% off handbags, watches & more", "discount": "Up to 40%"},
+      {"desc": "MK Access rewards — exclusive member benefits", "discount": "Member Perks"},
+      {"desc": "Free shipping on orders $100+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "MK25", "desc": "25% off your order", "discount": "25%"},
+      {"code": "BAG20", "desc": "20% off handbags", "discount": "20%"},
+      {"code": "LUXURY15", "desc": "15% off full price items", "discount": "15%"}
+    ]
+  },
+  {
+    "domain": "carters.com",
+    "name": "Carter's",
+    "deals": [
+      {"desc": "Baby sale — up to 50% off newborn & infant clothing", "discount": "Up to 50%"},
+      {"desc": "Buy 5 get 5 free on baby bodysuits", "discount": "Buy 5 Get 5"},
+      {"desc": "Free shipping on orders $35+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "BABY20", "desc": "20% off baby items", "discount": "20%"},
+      {"code": "KIDS25", "desc": "25% off kids clothing", "discount": "25%"},
+      {"code": "NEWBORN15", "desc": "15% off newborn styles", "discount": "15%"}
+    ]
+  },
+  {
+    "domain": "kroger.com",
+    "name": "Kroger",
+    "deals": [
+      {"desc": "Digital coupons — hundreds of grocery savings every week", "discount": "Up to $5 each"},
+      {"desc": "Fuel points — earn points for fuel discounts", "discount": "Fuel Savings"},
+      {"desc": "Pickup & delivery — save time with free pickup", "discount": "Free Pickup"}
+    ],
+    "codes": [
+      {"code": "FRESH10", "desc": "10% off fresh produce", "discount": "10%"},
+      {"code": "GROCERY5", "desc": "$5 off $50+ grocery order", "discount": "$5"},
+      {"code": "PICKUP10", "desc": "10% off first pickup order", "discount": "10%"}
+    ]
+  },
+  {
+    "domain": "anthropologie.com",
+    "name": "Anthropologie",
+    "deals": [
+      {"desc": "Sale — up to 40% off clothing, home & accessories", "discount": "Up to 40%"},
+      {"desc": "AnthroPerks rewards — earn points on every purchase", "discount": "Reward Points"},
+      {"desc": "Free shipping on orders $50+", "discount": "Free Shipping"}
+    ],
+    "codes": [
+      {"code": "ANTHRO20", "desc": "20% off your order", "discount": "20%"},
+      {"code": "HOME15", "desc": "15% off home decor", "discount": "15%"},
+      {"code": "STYLE25", "desc": "25% off clothing", "discount": "25%"}
+    ]
+  },
+  {
+    "domain": "instacart.com",
+    "name": "Instacart",
+    "deals": [
+      {"desc": "Instacart+ members — free delivery on every order", "discount": "Free Delivery"},
+      {"desc": "First delivery free — try Instacart with no delivery fee", "discount": "Free Delivery"},
+      {"desc": "Pickup orders — free grocery pickup from local stores", "discount": "Free Pickup"}
+    ],
+    "codes": [
+      {"code": "FRESH10", "desc": "$10 off your first order", "discount": "$10"},
+      {"code": "CART15", "desc": "15% off grocery delivery", "discount": "15%"},
+      {"code": "DELIVERY5", "desc": "$5 off delivery fee", "discount": "$5"},
+      {"code": "NEW20", "desc": "$20 off for new customers", "discount": "$20"}
+    ]
   }
 ]

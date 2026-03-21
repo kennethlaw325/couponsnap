@@ -261,6 +261,7 @@ async function runCouponFinder(manual = false) {
   }
 
   if (!couponField) {
+    logFailedAttempts(hostname, couponData?.codes?.map(c => c.code) || [])
     chrome.runtime.sendMessage({ type: 'NO_COUPON_FIELD', hostname })
     return
   }
@@ -288,7 +289,26 @@ async function runCouponFinder(manual = false) {
     await sleep(300)
   }
 
+  logFailedAttempts(hostname, couponData.codes.map(c => c.code))
   chrome.runtime.sendMessage({ type: 'NO_COUPON_WORKED' })
+}
+
+// ─── Failed Attempt Logging ───────────────────────────────────────────────────
+
+async function logFailedAttempts(hostname, codes) {
+  try {
+    const key = 'failed_attempts'
+    const result = await chrome.storage.local.get(key)
+    const log = result[key] || []
+    log.push({
+      domain: hostname.replace(/^www\./, ''),
+      codes,
+      ts: Date.now(),
+      url: window.location.pathname
+    })
+    // Keep last 200 entries
+    await chrome.storage.local.set({ [key]: log.slice(-200) })
+  } catch {}
 }
 
 // ─── Affiliate Tag Injection ──────────────────────────────────────────────────
