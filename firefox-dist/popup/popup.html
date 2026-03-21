@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CouponSnap</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 340px;
+      min-height: 200px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #f1f5f9;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo { font-size: 22px; }
+
+    .brand { font-size: 16px; font-weight: 700; letter-spacing: -0.5px; }
+    .tagline { font-size: 10px; opacity: 0.85; }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 9px 4px;
+      background: none;
+      border: none;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border-bottom: 2px solid transparent;
+    }
+
+    .tab-btn:hover { color: #94a3b8; }
+
+    .tab-btn.active {
+      color: #f97316;
+      border-bottom-color: #f97316;
+    }
+
+    .tab-count {
+      display: inline-block;
+      background: #334155;
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 99px;
+      margin-left: 4px;
+    }
+
+    .tab-btn.active .tab-count {
+      background: rgba(249,115,22,0.2);
+      color: #f97316;
+    }
+
+    /* ── Content ── */
+    .content { padding: 14px 16px; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Status Card ── */
+    .status-card {
+      background: #1e293b;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+
+    .status-icon {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .status-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+    }
+
+    .status-subtitle {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* ── Deal Cards ── */
+    .deal-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .deal-card {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .deal-info { flex: 1; min-width: 0; }
+
+    .deal-discount {
+      display: inline-block;
+      background: rgba(249,115,22,0.15);
+      color: #f97316;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 99px;
+      margin-bottom: 4px;
+      white-space: nowrap;
+    }
+
+    .deal-desc {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .btn-shop {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-shop:hover { opacity: 0.85; }
+
+    /* ── Coupon Code List ── */
+    .code-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .code-card {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .code-card.user-submitted {
+      border-left: 2px solid #a78bfa;
+    }
+
+    .code-badge {
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+    }
+
+    .code-meta { flex: 1; min-width: 0; }
+
+    .code-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-badge {
+      font-size: 10px;
+      color: #a78bfa;
+      margin-top: 2px;
+    }
+
+    .code-discount {
+      font-size: 12px;
+      font-weight: 700;
+      color: #4ade80;
+      white-space: nowrap;
+    }
+
+    /* ── Action Button ── */
+    .btn-primary {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      margin-top: 10px;
+    }
+
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Success Badge ── */
+    .success-badge {
+      background: #14532d;
+      border: 1px solid #22c55e;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+    }
+
+    .success-badge .code {
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: #4ade80;
+      letter-spacing: 1px;
+    }
+
+    .success-badge .desc {
+      font-size: 11px;
+      color: #86efac;
+      margin-top: 2px;
+    }
+
+    .savings-pill {
+      display: inline-block;
+      background: #166534;
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-top: 4px;
+    }
+
+    /* ── Submit Code Form ── */
+    .submit-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .submit-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .submit-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .input-code {
+      flex: 1;
+      padding: 8px 10px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #f1f5f9;
+      font-size: 12px;
+      font-family: monospace;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .input-code::placeholder {
+      color: #475569;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .input-code:focus { border-color: #f97316; }
+
+    .btn-submit {
+      padding: 8px 14px;
+      background: #1e293b;
+      border: 1px solid #f97316;
+      color: #f97316;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-submit:hover {
+      background: rgba(249,115,22,0.1);
+    }
+
+    .submit-feedback {
+      font-size: 11px;
+      margin-top: 6px;
+      min-height: 16px;
+    }
+
+    .submit-feedback.success { color: #4ade80; }
+    .submit-feedback.error { color: #f87171; }
+
+    /* ── Loading ── */
+    .loading-dots::after {
+      content: '';
+      animation: dots 1.5s infinite;
+    }
+
+    @keyframes dots {
+      0% { content: '.'; }
+      33% { content: '..'; }
+      66% { content: '...'; }
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 8px 16px 12px;
+      text-align: center;
+      font-size: 10px;
+      color: #334155;
+    }
+
+    .footer a { color: #475569; text-decoration: none; }
+    .footer a:hover { color: #64748b; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 20px 10px;
+      color: #475569;
+      font-size: 12px;
+    }
+    .empty-state .icon { font-size: 28px; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="logo">✂️</span>
+    <div>
+      <div class="brand">CouponSnap</div>
+      <div class="tagline">Deal Finder + Coupon Codes</div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs" style="display:none">
+    <button class="tab-btn active" data-tab="deals">
+      🔥 Deals <span class="tab-count" id="deals-count">0</span>
+    </button>
+    <button class="tab-btn" data-tab="codes">
+      🏷️ Codes <span class="tab-count" id="codes-count">0</span>
+    </button>
+  </div>
+
+  <div class="content" id="content">
+    <!-- Dynamic content -->
+  </div>
+
+  <div class="footer">
+    <a href="#" id="link-affiliate">How CouponSnap earns</a>
+  </div>
+
+  <script src="./popup.js"></script>
+</body>
+</html>
