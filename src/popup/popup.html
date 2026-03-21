@@ -389,15 +389,228 @@
       font-size: 12px;
     }
     .empty-state .icon { font-size: 28px; margin-bottom: 8px; }
+
+    /* ── Savings Strip ── */
+    .savings-strip {
+      background: linear-gradient(90deg, #14532d, #166534);
+      padding: 7px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .savings-strip-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: #4ade80;
+    }
+
+    .savings-strip-text span {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .btn-share-strip {
+      font-size: 11px;
+      font-weight: 600;
+      color: #4ade80;
+      background: rgba(74,222,128,0.15);
+      border: 1px solid rgba(74,222,128,0.3);
+      border-radius: 5px;
+      padding: 3px 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .btn-share-strip:hover { background: rgba(74,222,128,0.25); }
+
+    .savings-rate {
+      display: none;
+      font-size: 10px;
+      color: rgba(74,222,128,0.7);
+      margin-top: 2px;
+    }
+
+    /* ── Share Prompt ── */
+    .share-prompt {
+      background: #14532d;
+      border: 1px solid #22c55e;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+    }
+
+    .share-prompt-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #86efac;
+      margin-bottom: 8px;
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-tweet {
+      flex: 1;
+      padding: 7px 10px;
+      background: #1da1f2;
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-tweet:hover { opacity: 0.85; }
+
+    .btn-copy-link {
+      flex: 1;
+      padding: 7px 10px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-copy-link:hover { border-color: #64748b; color: #e2e8f0; }
+
+    /* ── Onboarding Overlay ── */
+    .onboarding-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .onboarding-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 20px 18px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .onboarding-logo { font-size: 36px; margin-bottom: 8px; }
+    .onboarding-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+    }
+    .onboarding-subtitle {
+      font-size: 11px;
+      color: #64748b;
+      margin-bottom: 18px;
+    }
+
+    .onboarding-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .onboarding-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-text {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .btn-get-started {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-get-started:hover { opacity: 0.9; }
   </style>
 </head>
 <body>
+  <!-- Onboarding Overlay (shown on first run) -->
+  <div class="onboarding-overlay" id="onboarding-overlay" style="display:none">
+    <div class="onboarding-card">
+      <div class="onboarding-logo">✂️</div>
+      <div class="onboarding-title">Welcome to CouponSnap!</div>
+      <div class="onboarding-subtitle">Your automatic coupon finder</div>
+      <div class="onboarding-steps">
+        <div class="onboarding-step">
+          <div class="step-num">1</div>
+          <div class="step-text">CouponSnap watches your checkout automatically</div>
+        </div>
+        <div class="onboarding-step">
+          <div class="step-num">2</div>
+          <div class="step-text">We find the best coupon code for your store</div>
+        </div>
+        <div class="onboarding-step">
+          <div class="step-num">3</div>
+          <div class="step-text">You save money — completely automatically</div>
+        </div>
+      </div>
+      <button class="btn-get-started" id="btn-get-started">Start Saving Money →</button>
+    </div>
+  </div>
+
   <div class="header">
     <span class="logo">✂️</span>
     <div>
       <div class="brand">CouponSnap</div>
       <div class="tagline">Deal Finder + Coupon Codes</div>
     </div>
+  </div>
+
+  <!-- Savings Strip (shown when savings > 0) -->
+  <div class="savings-strip" id="savings-strip" style="display:none">
+    <div>
+      <div class="savings-strip-text">💰 Saved <span id="savings-amount"></span> with CouponSnap</div>
+      <div class="savings-rate" id="savings-rate"></div>
+    </div>
+    <button class="btn-share-strip" id="btn-share-savings">Share ↗</button>
   </div>
 
   <div class="tabs" id="tabs" style="display:none">

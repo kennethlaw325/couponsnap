@@ -72,6 +72,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       tabStates.set(tabId, state)
       if (msg.hasCoupons) {
         setBadge(tabId, String(msg.couponCount))
+        // Track checkout sessions where we actually have codes to try
+        chrome.storage.local.get(['total_checkout_sessions'], r => {
+          chrome.storage.local.set({
+            total_checkout_sessions: (r.total_checkout_sessions || 0) + 1
+          })
+        })
       }
       break
     }
@@ -82,6 +88,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       state.tryingCode = msg.code
       tabStates.set(tabId, state)
       setBadge(tabId, '...', '#64748b')
+      // Track total codes tried
+      chrome.storage.local.get(['total_codes_tried'], r => {
+        chrome.storage.local.set({
+          total_codes_tried: (r.total_codes_tried || 0) + 1
+        })
+      })
       break
     }
 
@@ -96,6 +108,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       sendAnalyticsEvent('coupon_applied', {
         hostname: state.hostname || 'unknown',
         has_discount: !!msg.discount
+      })
+      // Track cumulative savings stats
+      chrome.storage.local.get(['savings_cents', 'coupons_applied'], r => {
+        const dollarMatch = (msg.discount || '').match(/\$?([\d]+\.?[\d]*)/)
+        const newCents = dollarMatch ? Math.round(parseFloat(dollarMatch[1]) * 100) : 0
+        chrome.storage.local.set({
+          savings_cents: (r.savings_cents || 0) + newCents,
+          coupons_applied: (r.coupons_applied || 0) + 1
+        })
       })
       break
     }
@@ -115,6 +136,19 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       tabStates.set(tabId, state)
       setBadge(tabId, '✗', '#ef4444')
       sendAnalyticsEvent('coupon_failed', { hostname: state.hostname || 'unknown' })
+      break
+    }
+
+    case 'AFFILIATE_INJECTED': {
+      const state = tabStates.get(tabId) || {}
+      // Accumulate total tagged links for this tab session
+      state.affiliateLinksTagged = (state.affiliateLinksTagged || 0) + (msg.count || 0)
+      state.affiliateHostname = msg.hostname
+      tabStates.set(tabId, state)
+      sendAnalyticsEvent('affiliate_injected', {
+        hostname: msg.hostname,
+        links_tagged: msg.count
+      })
       break
     }
 

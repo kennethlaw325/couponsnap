@@ -1,6 +1,8 @@
 // CouponSnap Popup — Deal Finder + Crowdsource Edition
 import { getCouponsForDomain, getAllCodesForDomain, submitUserCode, injectAffiliateTag } from '../data/coupons.js'
 
+const GITHUB_RELEASE_URL = 'https://github.com/kennethlaw325/couponsnap/releases/latest'
+
 const content = document.getElementById('content')
 const tabsEl = document.getElementById('tabs')
 const dealsCountEl = document.getElementById('deals-count')
@@ -103,6 +105,7 @@ async function renderSiteFound(hostname, checkoutState, tabId) {
   bindDealsButtons(hostname, entry)
   bindCodesApplyButton(tabId, checkoutState)
   bindCopyButtons()
+  bindSharePrompt()
   bindSubmitCode(hostname)
 }
 
@@ -177,6 +180,7 @@ async function buildCodesPanel(allCodes, checkoutState, tabId, hostname) {
         <div class="desc">${checkoutState.savings ? `Saved ${checkoutState.savings}` : 'Coupon applied!'}</div>
         ${checkoutState.savings ? `<span class="savings-pill">${checkoutState.savings} OFF</span>` : ''}
       </div>
+      ${renderSharePrompt(checkoutState.savings, hostname)}
     `
   } else if (checkoutState?.status === 'failed') {
     ctaHtml = `
@@ -321,6 +325,116 @@ function showFeedback(el, msg, type) {
   }, 4000)
 }
 
+// ─── Savings Counter ─────────────────────────────────────────────────────────
+
+async function loadSavingsStrip() {
+  try {
+    const r = await chrome.storage.local.get([
+      'savings_cents', 'coupons_applied',
+      'total_checkout_sessions', 'total_codes_tried'
+    ])
+    const cents = r.savings_cents || 0
+    const applied = r.coupons_applied || 0
+    const sessions = r.total_checkout_sessions || 0
+    const tried = r.total_codes_tried || 0
+
+    const stripEl = document.getElementById('savings-strip')
+    const amountEl = document.getElementById('savings-amount')
+    const rateEl = document.getElementById('savings-rate')
+    if (!stripEl || !amountEl) return
+
+    if (cents > 0 || applied > 0) {
+      // Primary display: dollar savings or coupon count
+      if (cents > 0) {
+        amountEl.textContent = '$' + (cents / 100).toFixed(2)
+      } else {
+        amountEl.textContent = applied + ' coupon' + (applied > 1 ? 's' : '')
+      }
+      stripEl.style.display = 'flex'
+
+      // Secondary: success rate (only show if we have meaningful data)
+      if (rateEl && sessions >= 3) {
+        const rate = Math.round((applied / sessions) * 100)
+        rateEl.textContent = `${rate}% success rate · ${sessions} sessions`
+        rateEl.style.display = 'block'
+      }
+    }
+
+    const shareBtn = document.getElementById('btn-share-savings')
+    if (shareBtn) {
+      shareBtn.addEventListener('click', () => {
+        const savingsTxt = cents > 0
+          ? '$' + (cents / 100).toFixed(2)
+          : applied + ' coupon' + (applied > 1 ? 's' : '')
+        const shareText = cents > 0
+          ? `I saved ${savingsTxt} shopping online with @CouponSnap! 🎉 Free Chrome extension that automatically finds & applies coupon codes: ${GITHUB_RELEASE_URL} #savings #frugal`
+          : `CouponSnap auto-applied ${savingsTxt} for me while shopping! Free Chrome extension: ${GITHUB_RELEASE_URL} #savings`
+        chrome.tabs.create({ url: buildTweetUrl(shareText) })
+      })
+    }
+  } catch {}
+}
+
+function buildTweetUrl(text) {
+  return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text)
+}
+
+// ─── Share Prompt (after coupon applied) ─────────────────────────────────────
+
+function renderSharePrompt(savingsText, hostname) {
+  const storeLabel = hostname.replace(/^www\./, '')
+  const savedLabel = savingsText || 'money'
+  const shareMsg = savingsText
+    ? `I saved ${savedLabel} on ${storeLabel} with @CouponSnap! 🎉 It automatically found and applied the coupon code for me. Get it free: ${GITHUB_RELEASE_URL} #savings #deals`
+    : `Just used @CouponSnap on ${storeLabel} — free Chrome extension that auto-applies coupon codes at checkout! ${GITHUB_RELEASE_URL} #savings`
+  return `
+    <div class="share-prompt">
+      <div class="share-prompt-title">🎉 Tell a friend and help them save too!</div>
+      <div class="share-buttons">
+        <button class="btn-tweet" data-tweet="${encodeURIComponent(shareMsg)}">𝕏 Tweet this</button>
+        <button class="btn-copy-link" id="btn-copy-ext-link">Copy link</button>
+      </div>
+    </div>
+  `
+}
+
+function bindSharePrompt() {
+  document.querySelectorAll('.btn-tweet').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tweetUrl = buildTweetUrl(decodeURIComponent(btn.dataset.tweet))
+      chrome.tabs.create({ url: tweetUrl })
+    })
+  })
+  const copyLinkBtn = document.getElementById('btn-copy-ext-link')
+  if (copyLinkBtn) {
+    copyLinkBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(GITHUB_RELEASE_URL)
+        copyLinkBtn.textContent = '✓ Copied!'
+        setTimeout(() => { copyLinkBtn.textContent = 'Copy link' }, 2000)
+      } catch {}
+    })
+  }
+}
+
+// ─── Onboarding Tooltip ───────────────────────────────────────────────────────
+
+async function maybeShowOnboarding() {
+  try {
+    const r = await chrome.storage.local.get('onboarding_seen')
+    if (r.onboarding_seen) return
+
+    const overlay = document.getElementById('onboarding-overlay')
+    if (!overlay) return
+    overlay.style.display = 'flex'
+
+    document.getElementById('btn-get-started')?.addEventListener('click', async () => {
+      overlay.style.display = 'none'
+      await chrome.storage.local.set({ onboarding_seen: true })
+    })
+  } catch {}
+}
+
 // ─── Main Init ────────────────────────────────────────────────────────────────
 
 async function init() {
@@ -341,4 +455,6 @@ async function init() {
 }
 
 initTabs()
+maybeShowOnboarding()
+loadSavingsStrip()
 init()
