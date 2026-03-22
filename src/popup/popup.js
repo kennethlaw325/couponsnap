@@ -2,7 +2,7 @@
 import { getCouponsForDomain, getAllCodesForDomain, submitUserCode, injectAffiliateTag } from '../data/coupons.js'
 
 const GITHUB_RELEASE_URL = 'https://github.com/kennethlaw325/couponsnap/releases/latest'
-const FEEDBACK_FORM_URL = 'https://forms.gle/REPLACE_WITH_REAL_FORM_URL'
+const FEEDBACK_FORM_URL = 'https://mail.google.com/mail/?view=cm&to=support@couponsnap.app&su=CouponSnap%20Beta%20Feedback&body=Rating%20(1-5)%3A%20%0D%0AWhat%20I%20like%20most%3A%20%0D%0AWhat%20to%20improve%3A%20%0D%0ATestimonial%20(can%20we%20share%3F)%3A%20%0D%0AEmail%20for%20updates%20(optional)%3A%20'
 
 const content = document.getElementById('content')
 const tabsEl = document.getElementById('tabs')
